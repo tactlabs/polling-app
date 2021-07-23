@@ -4,7 +4,7 @@
 {% block content %}
 
 <div class="row mt-4 ">
-    <div class="col-md-6">
+    <div class="col-md-4">
         <ol class="oll" start="0 "> 
             <h5><b>Candidates Name</b> </h5>       
             {% for i in range(0,val3) %}
@@ -12,9 +12,9 @@
             {% endfor %}
           </ol>  
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
         <form action="/update-view" method="POST">
-            <h5><b>Update the the Name</b> </h5>
+            <h5><b>Update the current Name List</b> </h5>
                 <h6>Enter the index number of the Name that you want to change</h6>
             <input type="number" name="num1" placeholder="Enter the index number "><br><br>
             <h6>Enter the new Name</h6>
@@ -24,6 +24,23 @@
                 </div>
     
             </div>
+    
+            <input class="btn btn-success" type="submit" value="Submit">
+        </form>
+
+    </div>
+    <div class="col-md-4">
+        <form action="/delete-view" method="POST">
+            <h5><b>Delete the Name</b> </h5>
+                <h6>Enter the index number of the Name that you want to Delete</h6>
+            <input type="number" name="num2" placeholder="Enter the index number "><br><br>
+            <!-- <h6>Enter the Name</h6> -->
+            <!-- <div class="form-group row">
+                <div class="col-xs-4">                   
+                    <input type="text" id="upt" name="delete" placeholder="Enter the Name">
+                </div>
+    
+            </div> -->
     
             <input class="btn btn-success" type="submit" value="Submit">
         </form>

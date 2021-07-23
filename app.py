@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request,redirect
+from flask import Flask,render_template,request,redirect,session
 from flask.helpers import url_for
 from dotenv import load_dotenv
 
@@ -7,6 +7,10 @@ from pymongo import MongoClient
 
 
 app=Flask(__name__)
+# app.secret_key = b'\xcc^\x91\xea\x17-\xd0W\x03\xa7\xf8J0\xac8\xc5'
+# app.config['SECRET_KEY'] = 'd0b0d74670692290101e00cd2e2de48a'
+
+
 
 load_dotenv
 mongo_uri = os.getenv('MONGO_URI')
@@ -17,6 +21,10 @@ db = cluster["Polling_App"]
 collection = db["Names"]
 
 @app.route('/',methods=['GET','POST'])
+def login_page():
+    return render_template("login.html")
+
+@app.route('/poll_page',methods=['GET','POST'])
 def get_names():
     val=[]
     for x in collection.find({},{"_id" : 0 ,"Name" : 1}):
@@ -88,7 +96,13 @@ def update_view():
     # return redirect(url_for("admin"))
     return redirect(request.referrer)
 
+@app.route('/delete-view',methods=["GET","POST"])
+def delete_view():
+    num2 = int(request.values.get("num2"))
 
+    query = {'id' : num2}
+    collection.delete_one(query)
+    return redirect(request.referrer)
 
 if __name__ == '__main__':
     app.run(debug=True)
