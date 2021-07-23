@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %} index-page{% endblock title %}
+
+{% block content %}
+<div >
+    <br><br><br>
+    <form action="/enter-names" method="POST">
+        <h5>Number Of Inputs</h5>
+        <input type="number" name="num" placeholder="Enter Number Of Inputs"><br><br>
+        <input class="btn btn-success" type="submit" value="Submit">
+    </form>
+</div>
+<br> <br>
+<div>
+    <form action="/" method="POST">
+        <h5>To view the Polling Page</h5>         
+        <input class="btn btn-success" type="submit" value="To View">
+    </form>
+</div>
+
+<div class="number center">
+    <br><br><br>
+    <form action="/update" method="POST">
+        <h5>Update the Name</h5>            
+        <input class="btn btn-success" type="submit" value="update">
+    </form>
+</div>
+{% endblock content %}

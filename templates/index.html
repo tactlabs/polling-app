@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %} Polling-Page {% endblock title %}
+
+{% block content %}
+<!-- <form action="/poll"></form>
+    {% for i in val %}
+           <input type="radio" name="field" value="{{ i }}"> {{ i }}<br>
+        {% endfor %}
+        <input type="submit" value="Vote" />
+      </form> -->
+<div class="row">
+    <div class="col-md-12">
+        <h1><b></b></h1>
+    </div>
+</div>
+
+
+<br> <br>
+<form action="/poll " method="POST" >
+    {% for x in val %}
+        <div class="row ">
+
+            <div class="col-auto">
+                <input type="text" id="" name="poll" value="{{ x }}" class="form-control"{{ x }} readonly> <br>
+            </div>
+            <div class="col-auto ">
+                <input type="submit" value="Vote" style="background: green;">
+            </div>
+        </div>
+    {% endfor %}
+
+</form>
+
+
+<!-- <form action="/poll" >
+    {% for x in val %}
+        <div class="row g-3 align-items-center">
+            <fieldset disabled>
+                <div class="col-auto">
+                    <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ x }}">
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary">Vote</button>
+
+                </div>
+
+            </fieldset>
+
+        </div>
+        
+
+    {% endfor %}
+
+</form> -->
+{% endblock content %}

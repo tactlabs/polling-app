@@ -1,0 +1,21 @@
+{%extends "base.html"%}
+{% block title %}upload-page{% endblock title %}
+
+{% block content  %}
+<form action="/insert" id="usrform">
+    {% for i in range(num) %}
+
+    <h4>Name {{i+1}}</h4>
+    <div class="form-group row">
+        <div class="col-xs-4">
+            <input type="text" id="fname" name="fname" placeholder="Enter the Name">
+        </div>
+
+    
+    </div>
+
+    {% endfor %}
+
+    <input class="btn btn-success" type="submit">
+</form>
+{% endblock content %}
