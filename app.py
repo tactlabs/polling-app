@@ -7,9 +7,7 @@ from pymongo import MongoClient
 
 
 app=Flask(__name__)
-# app.secret_key = b'\xcc^\x91\xea\x17-\xd0W\x03\xa7\xf8J0\xac8\xc5'
-# app.config['SECRET_KEY'] = 'd0b0d74670692290101e00cd2e2de48a'
-
+app.config['SECRET_KEY'] = '4aad4c8ec9d4fe4f72aab7ff4e82cc58'
 
 
 load_dotenv
@@ -26,12 +24,17 @@ def login_page():
 
 @app.route('/poll_page',methods=['GET','POST'])
 def get_names():
-    val=[]
-    for x in collection.find({},{"_id" : 0 ,"Name" : 1}):
-        y = x["Name"]
-        val.append(y)
-    print(val)
-    return render_template("index.html",val=val)
+    if "user" in session:
+        user = session["user"]
+        print(user)
+        val=[]
+        for x in collection.find({},{"_id" : 0 ,"Name" : 1}):
+            y = x["Name"]
+            val.append(y)
+        print(val)
+        return render_template("index.html",val=val)
+    else:
+        return redirect(url_for("login"))
 
 
 @app.route('/admin')
@@ -103,6 +106,22 @@ def delete_view():
     query = {'id' : num2}
     collection.delete_one(query)
     return redirect(request.referrer)
+
+@app.route('/login', methods=["GET","POST"])
+def login():
+    if request.method == "POST":
+        user = request.form["nm"]
+        session["user"] = user
+        return redirect(url_for("get_names"))
+    else:
+        if "user" in session:
+            return redirect(url_for("get_names"))
+        return render_template("login.html")
+
+@app.route("/logout",methods=["GET","POST"])
+def logout():
+    session.pop("user",None)
+    return redirect(url_for("login"))
 
 if __name__ == '__main__':
     app.run(debug=True)
