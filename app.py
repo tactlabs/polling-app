@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request,redirect,session
+from flask import Flask,render_template,request,redirect,session,jsonify
 from flask.helpers import url_for
 from dotenv import load_dotenv
 
@@ -32,7 +32,7 @@ def get_names():
             y = x["Name"]
             val.append(y)
         print(val)
-        return render_template("index.html",val=val)
+        return render_template("polling_page.html",val=val)
     else:
         return redirect(url_for("login"))
 
@@ -122,6 +122,21 @@ def login():
 def logout():
     session.pop("user",None)
     return redirect(url_for("login"))
+
+# @app.route('/vote_data',methods=["GET","POST"])
+# def vote_data():
+#     if request.method == "POST":
+#         if "user" in session:
+
+#             user = session["user"]
+#             print(user)
+#             poll_option = request.form['poll_option']
+#             print(poll_option)
+#             query = {"Email" : user , "Vote" : poll_option}
+#             collection.insert(query)
+
+#             msg = 'success'
+#     return jsonify(msg)
 
 if __name__ == '__main__':
     app.run(debug=True)

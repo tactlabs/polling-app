@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block title %} Polling-Page {% endblock title %}
+
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> 
+
+<div class="row">
+    <div class="col-md-12">
+        <h1><b></b></h1>
+    </div>
+</div>
+
+
+<br> <br>
+<!-- <form action="/poll " method="POST" >
+    {% for x in val %}
+        <div class="row ">
+
+            <div class="col-auto">
+                <input type="text" id="" name="poll" value="{{ x }}" class="form-control"{{ x }} readonly> <br>
+            </div>
+            <div class="col-auto ">
+                <input type="submit" value="Vote" style="background: green;">
+            </div>
+        </div>
+    {% endfor %}
+
+</form> -->
+
+<h2 style="text-align: center;" >Welcome to the Voting Page</h2>
+<div class="row">
+    <div class="col-md-6">
+        <!-- #action="/result"  -->
+        <form method="post" id="poll_form">
+            <br />
+            {% for x in val %}
+            <div class="radio">
+                <label><h4><input type="radio" name="poll_option" class="poll_option" value="{{ x }}" /> {{ x }}</h4></label>
+            </div>
+            {% endfor %}
+            <br />
+            <input type="submit" name="poll_button" id="poll_button" class="btn btn-primary" />
+        </form>
+    </div>
+</div>
+
+
+
+
+<br>
+<br>
+<div>
+    <form action="/logout" method="POST">      
+        <input class="btn btn-success" type="submit" value="logout">
+    </form>
+</div>
+
+
+
+
+<script>
+   $(document).ready(function(){
+    fetch_poll_data();
+    function fetch_poll_data()
+    { 
+        var fetchall = 'all';
+        var dataString = 'fetchall='+ fetchall;
+        $.ajax({
+            url:"/polldata",
+            method:"POST",
+            data: dataString,
+            success:function(data)
+            {
+                $('#poll_result').html(data); 
+                $("#poll_result").append(data.htmlresponse);
+            }
+        });
+    }
+    $('#poll_form').on('submit', function(event){
+        event.preventDefault();
+        var poll_option = '';
+        $('.poll_option').each(function(){
+            if($(this).prop("checked"))
+            {
+                poll_option = $(this).val();
+            }
+        });
+        if(poll_option != '')
+        {
+            $('#poll_button').attr('disabled', 'disabled');
+            var form_data = $(this).serialize();
+            $.ajax({
+                url:"/vote_data",
+                method:"POST",
+                data:form_data,
+                success:function()
+                {
+                    $('#poll_form')[0].reset();
+                    $('#poll_button').attr('disabled', false);
+                    fetch_poll_data();
+                    alert("Poll Submitted Successfully");
+                }
+            });
+        }
+        else
+        {
+            alert("Please Select Option");
+        }
+    });
+});
+</script>
+
+
+{% endblock content %}
