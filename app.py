@@ -123,20 +123,50 @@ def logout():
     session.pop("user",None)
     return redirect(url_for("login"))
 
-# @app.route('/vote_data',methods=["GET","POST"])
-# def vote_data():
-#     if request.method == "POST":
-#         if "user" in session:
+@app.route('/vote_data',methods=["GET","POST"])
+def vote_data():
+    collection = db["Vote"]
+    if request.method == "POST":
+        if "user" in session:
 
-#             user = session["user"]
-#             print(user)
-#             poll_option = request.form['poll_option']
-#             print(poll_option)
-#             query = {"Email" : user , "Vote" : poll_option}
-#             collection.insert(query)
+            user = session["user"]
+            print(user)
+            poll_option = request.form['poll_option']
+            print(poll_option)
+            query = {"Email" : user , "Vote" : poll_option}
+            collection.insert_one(query)
 
-#             msg = 'success'
-#     return jsonify(msg)
+            msg = 'success'
+            print(msg)
+
+        return "Your have successfully  voted!"
+
+@app.route('/vote_details',methods=["GET","POST"])
+def vote_details():
+    collection = db["Vote"]
+    details =[]
+    for x in collection.find():
+
+        email = x['Email']
+        vote  = x['Vote']
+         
+        result = {
+            'Email' : email ,
+            'Vote'  : vote  
+        }
+        details.append(result)
+        
+    print(details)
+    return  render_template("vote_details.html",result = details )
+
+@app.route('/drop',methods=['GET','POST'])
+def drop():
+    collection = db["Vote"]
+    collection.delete_many({})
+
+    return redirect(request.referrer) 
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

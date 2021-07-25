@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title  %}vote-details{% endblock title%}
+
+{% block content %}
+
+<!-- <style>
+    table, th, td {
+  border: 1px solid black;
+  
+}
+</style>
+
+  <h2 style="text-align: center;" >Vote Details</h2>  
+  <br>
+  <br>
+
+
+   <table border="1">
+    <tr>
+        {% for header in headings %}
+            <th>{{ header }}</th>
+        {% endfor %}   
+    </tr>
+
+      {% for i in result %}
+        <tr>
+
+         <td><h5> {{i.Email}}</h5></td>
+         <td><h5> {{i.Vote}}</h5></td>
+                
+        </tr>
+      {% endfor%}  
+   </table>
+ -->
+
+
+
+ <style>
+    table, th, td {
+  border: 1px solid black;
+  
+}
+</style>
+<br>
+
+<h2 style="text-align: center;" >Vote Details</h2> 
+<br> 
+<br>
+ <table id="data" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Vote</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in result %}
+        <tr>
+          <td>{{ user.Email }}</td>
+          <td>{{ user.Vote }}</td>
+         
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+<div class="container">
+    <div class="row">
+        
+        <div class="col-md-6">
+            <div style="float: left;">
+                <br>
+                <form action="/drop" method="POST">
+                    <h5>To Remove all Vote details</h5>            
+                    <input class="btn btn-success " onclick="myFunction()" type="submit" value="delete">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function myFunction() {
+      alert("Successfully all values removed!");
+    }
+    </script>
+
+{% endblock content %}
