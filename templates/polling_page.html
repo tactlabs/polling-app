@@ -2,8 +2,60 @@
 {% block title %} Polling-Page {% endblock title %}
 
 {% block content %}
+<link href='https://luengo-font.s3.amazonaws.com/fonts.css' rel='stylesheet' type='text/css'>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> 
+
+<style>
+    * {
+  box-sizing: border-box;
+}
+.card {
+
+  overflow: hidden;
+  position: absolute;
+  top: 190px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  height: 400px;
+  width: 500px;
+  border-style: solid;
+  border-width: 10px;
+  border-color: white;
+  border-radius: 50px;
+  background-color: grey;
+}
+body {
+  background-color: transparent;
+  font-family: "Luengo-Bold", sans-serif;
+}
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+  -khtml-user-select: none; /* Konqueror */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE/Edge */
+  user-select: none; /* non-prefixed version, currently
+                                  not supported by any browser */
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.btn{
+    float: left;
+    
+}
+.posi{
+    padding-right: 5px;
+    margin-left: 79px;
+}
+
+</style>
+
 
 <div class="row">
     <div class="col-md-12">
@@ -12,7 +64,7 @@
 </div>
 
 
-<br> <br>
+
 <!-- <form action="/poll " method="POST" >
     {% for x in val %}
         <div class="row ">
@@ -27,10 +79,14 @@
     {% endfor %}
 
 </form> -->
+<br>
+<h4 style="text-align: center; " >Welcome to the Voting Page</h4>
 
-<h2 style="text-align: center;" >Welcome to the Voting Page</h2>
-<div class="row">
+<div class='card'>
+
+<div class="row card-body d-flex justify-content-center">
     <div class="col-md-6">
+        <br>
         <!-- #action="/result"  -->
         <form method="post" id="poll_form">
             <br />
@@ -40,21 +96,27 @@
             </div>
             {% endfor %}
             <br />
-            <input type="submit" name="poll_button" id="poll_button" class="btn btn-primary" />
+            <input type="submit" value="Vote" name="poll_button" id="poll_button" class="btn btn-primary" />
+            <div>
+                <form action="/logout" method="POST">      
+                    <input class="btn btn-success  posi" type="submit" value="logout">
+                </form>
+            </div>
         </form>
     </div>
 </div>
 
-
-
-
-<br>
-<br>
-<div>
-    <form action="/logout" method="POST">      
-        <input class="btn btn-success" type="submit" value="logout">
-    </form>
 </div>
+<div class="buttons">
+    <input type="submit" value="Vote" name="poll_button" id="poll_button" class="btn btn-primary" />
+    <form action="/logout" method="POST">      
+        <input class="btn btn-success  posi" type="submit" value="logout">
+    </form>
+
+</div>
+
+
+
 
 
 
