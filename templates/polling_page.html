@@ -18,8 +18,8 @@
   left: 0;
   right: 0;
   margin: auto;
-  height: 400px;
-  width: 500px;
+  height: auto;
+  width: 400px;
   border-style: solid;
   border-width: 10px;
   border-color: white;
@@ -49,9 +49,10 @@ iframe {
     float: left;
     
 }
-.posi{
+.posi {
     padding-right: 5px;
-    margin-left: 79px;
+    margin-left: 439px;
+    margin-top: 129px;
 }
 
 </style>
@@ -84,7 +85,7 @@ iframe {
 
 <div class='card'>
 
-<div class="row card-body d-flex justify-content-center">
+<div class="row card-body justify-content-center">
     <div class="col-md-6">
         <br>
         <!-- #action="/result"  -->
@@ -97,23 +98,28 @@ iframe {
             {% endfor %}
             <br />
             <input type="submit" value="Vote" name="poll_button" id="poll_button" class="btn btn-primary" />
-            <div>
-                <form action="/logout" method="POST">      
-                    <input class="btn btn-success  posi" type="submit" value="logout">
-                </form>
-            </div>
+           
         </form>
     </div>
 </div>
 
 </div>
-<div class="buttons">
-    <input type="submit" value="Vote" name="poll_button" id="poll_button" class="btn btn-primary" />
-    <form action="/logout" method="POST">      
-        <input class="btn btn-success  posi" type="submit" value="logout">
-    </form>
 
+
+
+<div class="row">
+    <div class="col-md-6">
+
+    </div>
+    <div class="col-md-6">
+        <form action="/logout" method="POST">      
+            <input class="btn btn-success  posi" type="submit" value="logout">
+        </form>
+    </div>
 </div>
+
+    
+
 
 
 

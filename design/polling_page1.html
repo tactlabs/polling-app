@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href='https://luengo-font.s3.amazonaws.com/fonts.css' rel='stylesheet' type='text/css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> 
+    <title>Polling-Page</title>
+  </head>
+  <style>
+        
+    .space {
+      padding: 14%;
+    }
+
+    .navbar-brand {
+      padding-left: 4%;
+    }
+
+    .nav-link {
+      font-weight: 900;
+      font-size: 25px;
+    }
+    h3{
+      font-weight: 700;
+      font-size: 30px;
+      color: lightcyan;      
+    }
+    p{
+      font-weight: 700;
+      font-size: 30px;
+      font-style: italic;
+      font-family: 'Courier New', Courier, monospace;
+    }
+    * {
+  box-sizing: border-box;
+}
+.card {
+
+  overflow: hidden;
+  position: absolute;
+  top: 190px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  height: 500px;
+  width: 400px;
+  border-style: solid;
+  border-width: 10px;
+  border-color: white;
+  border-radius: 50px;
+  background-color: grey;
+}
+body {
+  background-color: transparent;
+  font-family: "Luengo-Bold", sans-serif;
+}
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+  -khtml-user-select: none; /* Konqueror */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE/Edge */
+  user-select: none; /* non-prefixed version, currently
+                                  not supported by any browser */
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.btn{
+    float: left;
+    
+}
+.alin{
+    padding-right: 6px;
+    margin-left: 16px;
+}
+
+    </style>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+        <a class="navbar-brand" href="#">
+            <img src="https://featurepreneur.com/static/img/logo.png" width="70" height="70"
+                class="d-inline-block align-top" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Featurepreneur <span class="sr-only"></span></a>
+            </li>
+        </ul>
+    </nav>
+    </nav>
+
+    <div class="section">
+        <div class="contatiner">
+            <div class="row">
+                <br>
+                <br>
+<h4 style="text-align: center; " >Welcome to the Voting Page</h4>
+<br>
+<br>
+<div class='card'>
+
+<div class="row card-body d-flex justify-content-center">
+    <div class="col-md-6">
+        <br>
+        <!-- #action="/result"  -->
+        <form method="post" id="poll_form">
+            <br />
+            {% for x in val %}
+            <div class="radio">
+                <label><h4><input type="radio" name="poll_option" class="poll_option" value="{{ x }}" /> {{ x }}</h4></label>
+            </div>
+            {% endfor %}
+            <br />
+            <input type="submit" value="Vote" name="poll_button" id="poll_button" class="btn btn-primary" />
+           
+                <form action="/logout" method="POST">      
+                    <input class="btn btn-success alin " type="submit" value="logout">
+                </form>
+        </form>
+    </div>
+</div>
+
+</div>
+
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        $(document).ready(function(){
+         fetch_poll_data();
+         function fetch_poll_data()
+         { 
+             var fetchall = 'all';
+             var dataString = 'fetchall='+ fetchall;
+             $.ajax({
+                 url:"/polldata",
+                 method:"POST",
+                 data: dataString,
+                 success:function(data)
+                 {
+                     $('#poll_result').html(data); 
+                     $("#poll_result").append(data.htmlresponse);
+                 }
+             });
+         }
+         $('#poll_form').on('submit', function(event){
+             event.preventDefault();
+             var poll_option = '';
+             $('.poll_option').each(function(){
+                 if($(this).prop("checked"))
+                 {
+                     poll_option = $(this).val();
+                 }
+             });
+             if(poll_option != '')
+             {
+                 $('#poll_button').attr('disabled', 'disabled');
+                 var form_data = $(this).serialize();
+                 $.ajax({
+                     url:"/vote_data",
+                     method:"POST",
+                     data:form_data,
+                     success:function()
+                     {
+                         $('#poll_form')[0].reset();
+                         $('#poll_button').attr('disabled', false);
+                         fetch_poll_data();
+                         alert("Poll Submitted Successfully");
+                     }
+                 });
+             }
+             else
+             {
+                 alert("Please Select Option");
+             }
+         });
+     });
+     </script>
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> -->
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>
