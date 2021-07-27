@@ -7,7 +7,16 @@
         <h1 style="text-align: center; padding-top: 20px;" >WELCOME TO THE LOGIN PAGE</h1>
     </b>
 </div>
+<br>
 
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <p><h6>{{message}}</h6></p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
 <div class="section">
     <div class="container">
         <div class="row">

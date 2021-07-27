@@ -65,7 +65,6 @@ iframe {
 </div>
 
 
-
 <!-- <form action="/poll " method="POST" >
     {% for x in val %}
         <div class="row ">
@@ -80,33 +79,41 @@ iframe {
     {% endfor %}
 
 </form> -->
-<br>
+
 <h4 style="text-align: center; " >Welcome to the Voting Page</h4>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <p><h5>{{message}}</h5></p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
 
 <div class='card'>
 
 <div class="row card-body justify-content-center">
     <div class="col-md-6">
         <br>
-        <!-- #action="/result"  -->
         <form method="post" id="poll_form">
-            <br />
+            <br />{% if msg %}
+                    {{msg}}
+                  {% endif %}
             {% for x in val %}
             <div class="radio ">
-                <label><h4><input type="radio"  name="poll_option" class="poll_option" value="{{ x }}" /> {{ x }}</h4></label>
+                <label><h4><input type="radio" id="myRadio"  name="poll_option" class="poll_option" value="{{ x }}" /> {{ x }}</h4></label>
             </div>
             {% endfor %}
             <br />
             <input type="submit" value="Vote" name="poll_button" id="poll_button" class="btn btn-primary" />
+            <!-- <button  type="submit" name="poll_button" id="poll_button" >Vote</button> -->
            
         </form>
     </div>
 </div>
 
 </div>
-
-
-
+  
 <div class="row">
     <div class="col-md-6">
 
@@ -117,15 +124,6 @@ iframe {
         </form>
     </div>
 </div>
-
-    
-
-
-
-
-
-
-
 
 <script>
    $(document).ready(function(){
@@ -158,6 +156,8 @@ iframe {
         {
             $('#poll_button').attr('disabled', 'disabled');
             var form_data = $(this).serialize();
+            var flag =0;
+            
             $.ajax({
                 url:"/vote_data",
                 method:"POST",
@@ -171,6 +171,7 @@ iframe {
                 }
             });
         }
+        
         else
         {
             alert("Please Select Option");
@@ -178,6 +179,5 @@ iframe {
     });
 });
 </script>
-
 
 {% endblock content %}

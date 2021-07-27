@@ -1,5 +1,4 @@
-from flask import Flask,render_template,request,redirect,session,jsonify
-from flask.helpers import url_for
+from flask import Flask,render_template,request,redirect,session,jsonify,url_for,flash
 from dotenv import load_dotenv
 
 import os
@@ -112,6 +111,7 @@ def login():
     if request.method == "POST":
         user = request.form["nm"]
         session["user"] = user
+        flash("Login Successful")
         return redirect(url_for("get_names"))
     else:
         if "user" in session:
@@ -120,6 +120,8 @@ def login():
 
 @app.route("/logout",methods=["GET","POST"])
 def logout():
+    if "user" in session:
+        flash("You have been logged out!" , "info")
     session.pop("user",None)
     return redirect(url_for("login"))
 
@@ -134,12 +136,22 @@ def vote_data():
             poll_option = request.form['poll_option']
             print(poll_option)
             query = {"Email" : user , "Vote" : poll_option}
-            collection.insert_one(query)
+            if collection.find_one({"Vote": query['Vote'], "Email" : query["Email"]}):
+                print("Duplicate value found")
+                flash("Duplicate value found!")
+                # return redirect(request.referrer)
+                # return render_template("polling_page.html",msg = msg)
+                
+            else:    
+                collection.insert_one(query)
+                print("No duplicate values!")
+                flash("No Duplicate value found! Vote submited successfully")
+                
 
-            msg = 'success'
-            print(msg)
+            
 
         return "Your have successfully  voted!"
+    
 
 @app.route('/vote_details',methods=["GET","POST"])
 def vote_details():
