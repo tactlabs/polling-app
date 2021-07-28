@@ -138,14 +138,14 @@ def vote_data():
             query = {"Email" : user , "Vote" : poll_option}
             if collection.find_one({"Vote": query['Vote'], "Email" : query["Email"]}):
                 print("Duplicate value found")
-                flash("Duplicate value found!")
+                return "Duplicate value found!"
                 # return redirect(request.referrer)
-                # return render_template("polling_page.html",msg = msg)
+                # return render_template("alert.html",msg = msg )
                 
             else:    
                 collection.insert_one(query)
                 print("No duplicate values!")
-                flash("No Duplicate value found! Vote submited successfully")
+                # flash("No Duplicate value found! Vote submited successfully")
                 
 
             

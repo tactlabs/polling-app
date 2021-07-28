@@ -51,9 +51,23 @@ iframe {
 }
 .posi {
     padding-right: 5px;
-    margin-left: 439px;
-    margin-top: 129px;
+    margin-left: 590px;
+    margin-top: 155px;
 }
+.fix{
+    margin-top: 30px;
+}
+#list-name{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 700;
+    font-size: 25px;
+    color: #ececec;
+    padding-left: 69px;
+    margin-top: 18px;
+}
+/* #lg-pos{
+    padding-right: 10px;
+} */
 
 </style>
 
@@ -81,24 +95,48 @@ iframe {
 </form> -->
 
 <h4 style="text-align: center; " >Welcome to the Voting Page</h4>
-{% with messages = get_flashed_messages() %}
+<!-- {% with messages = get_flashed_messages() %}
     {% if messages %}
         {% for message in messages %}
             <p><h5>{{message}}</h5></p>
         {% endfor %}
     {% endif %}
-{% endwith %}
+{% endwith %} -->
+<div class="row">
+    <div class="col-md-4">
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+        </div>
+        {% endfor %}
+        <br>
+        <br>
+        <div class="card1" style="width: 18rem;">
+            <div class="card-body " style="background:#c8dcb3;" >
+              <h5 class="card-title">Instructions</h5>
+              <h6 class="card-text">* The user can proceed to cast his/her vote in this application. </h6>
 
+              <h6 class="card-text">* You can vote for everyone on this list . But once you vote a candidate and try to vote the same person again , That will not consider as a vote!.</h6>
+            </div>
+          </div>
+        
+    </div>
+    <div class="col-md-8">
+        <!-- <h6 id="lg-pos" >Do you want to logout?</h6> -->
+        <form action="/logout" method="POST">    
+            <input class="btn btn-success  posi" type="submit" value="logout">
+        </form>
+    </div>
+</div>
 
 <div class='card'>
-
+    <h3 id="list-name" >List of Candidates</h3>
 <div class="row card-body justify-content-center">
     <div class="col-md-6">
         <br>
         <form method="post" id="poll_form">
-            <br />{% if msg %}
-                    {{msg}}
-                  {% endif %}
+            
             {% for x in val %}
             <div class="radio ">
                 <label><h4><input type="radio" id="myRadio"  name="poll_option" class="poll_option" value="{{ x }}" /> {{ x }}</h4></label>
@@ -114,7 +152,7 @@ iframe {
 
 </div>
   
-<div class="row">
+<!-- <div class="row">
     <div class="col-md-6">
 
     </div>
@@ -123,7 +161,7 @@ iframe {
             <input class="btn btn-success  posi" type="submit" value="logout">
         </form>
     </div>
-</div>
+</div> -->
 
 <script>
    $(document).ready(function(){
@@ -167,7 +205,7 @@ iframe {
                     $('#poll_form')[0].reset();
                     $('#poll_button').attr('disabled', false);
                     fetch_poll_data();
-                    alert("Poll Submitted Successfully");
+                    alert("Poll Submitted ");
                 }
             });
         }

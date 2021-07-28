@@ -2,14 +2,19 @@
 {% block title %} index-page{% endblock title %}
 
 {% block content %}
-
+<style>
+    #inpu{
+        padding-top: 1px;
+    }
+</style>
 
 <div class="row " style="margin-top: 150px;" >
     <div class="col-md-4">
         <div >
             <form action="/enter-names" method="POST">
                 <h5>Number Of Inputs</h5>
-                <input type="number" name="num" placeholder="Enter Number Of Inputs"><br><br>
+                <input type="number" name="num" placeholder="Enter Number Of Inputs" >
+                <br> <br>
                 <input class="btn btn-success" type="submit" value="Submit">
             </form>
         </div>
@@ -17,7 +22,8 @@
     <div class="col-md-4">
         <div class="number center">
             <form action="/update" method="POST">
-                <h5>Update & Delete Name</h5>            
+                <h5>Update & Delete Name</h5>   
+                <br>     <br>    
                 <input class="btn btn-success" type="submit" value="update">
             </form>
         </div>
@@ -25,7 +31,8 @@
     <div class="col-md-4">
         <div class="number center">
             <form action="/vote_details" method="POST">
-                <h5>Vote details</h5>            
+                <h5>Vote details</h5>  
+                <br>          <br>
                 <input class="btn btn-success" type="submit" value="update">
             </form>
         </div>
