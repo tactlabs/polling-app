@@ -1,5 +1,10 @@
 from flask import Flask,render_template,request,redirect,session,jsonify,url_for,flash
 from dotenv import load_dotenv
+import csv 
+import pandas as pd
+import business
+
+
 
 import os
 from pymongo import MongoClient
@@ -168,7 +173,7 @@ def vote_details():
         }
         details.append(result)
         
-    print(details)
+    # print(details)
     return  render_template("vote_details.html",result = details )
 
 @app.route('/drop',methods=['GET','POST'])
@@ -177,6 +182,70 @@ def drop():
     collection.delete_many({})
 
     return redirect(request.referrer) 
+
+@app.route('/vote-count',methods=["GET","POST"])
+def task_count():
+    collection = db["Vote"]
+    # details =[]
+    agg_result = collection.aggregate(
+        [{
+            "$group" :
+             {"_id" : "$Vote",
+             "Result" : {"$sum" : 1}
+             }}
+        ])
+
+
+    names=[]
+    res=[]
+    for value in agg_result:
+        names.append(value['_id'])
+        res.append(value['Result'] )
+
+    print(res)
+    print(names)
+
+    data={'Vote': names,'Result': res}
+    df = pd.DataFrame(data, columns = ['Vote', 'Result'])
+                             
+    print(df)
+    df.to_csv('result.csv', index=False)
+
+    
+    
+    
+    # result = []
+    # for x in agg_result:
+    #     result.append(x)
+    
+    # print(len(result))
+    # ln = len(result)
+
+    # # print(result[0])
+    # temp_store = []
+    # i = 0
+    # for i in range(ln):
+    #     temp_store = result[i]
+    
+    # z = 0 
+    # for z in range(ln):
+        
+    #     print(temp_store['Result'])
+    #     print(str(temp_store['_id']))
+        
+    
+    # data ={'Vote_Result': agg_result}
+    # df = pd.DataFrame(data)
+    # df.to_csv('result.csv', index=False)
+
+    # data={'Vote Result':agg_result}
+    # df = pd.DataFrame(data )
+                             
+    # print(df)
+    # df.to_csv('vote_result.csv', index=False)
+
+
+    return render_template("vote_result.html",agg_result = agg_result)
 
 
 
