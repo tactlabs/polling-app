@@ -3,3 +3,4 @@ gunicorn
 dnspython
 pymongo
 python-dotenv
+pandas==1.2.4
