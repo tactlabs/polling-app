@@ -6,6 +6,7 @@ import business
 
 
 
+
 import os
 from pymongo import MongoClient
 
@@ -207,46 +208,48 @@ def task_count():
 
     data={'Vote': names,'Result': res}
     df = pd.DataFrame(data, columns = ['Vote', 'Result'])
-                             
+
+                            
     print(df)
     df.to_csv('result.csv', index=False)
-
+    agg_result1 = agg_result
     
-    
-    
-    # result = []
-    # for x in agg_result:
-    #     result.append(x)
-    
-    # print(len(result))
-    # ln = len(result)
-
-    # # print(result[0])
-    # temp_store = []
-    # i = 0
-    # for i in range(ln):
-    #     temp_store = result[i]
-    
-    # z = 0 
-    # for z in range(ln):
-        
-    #     print(temp_store['Result'])
-    #     print(str(temp_store['_id']))
-        
-    
-    # data ={'Vote_Result': agg_result}
-    # df = pd.DataFrame(data)
-    # df.to_csv('result.csv', index=False)
-
-    # data={'Vote Result':agg_result}
-    # df = pd.DataFrame(data )
-                             
-    # print(df)
-    # df.to_csv('vote_result.csv', index=False)
+    return render_template("vote_result.html")
 
 
-    return render_template("vote_result.html",agg_result = agg_result)
+@app.route('/table_result',methods=["GET","POST"])
+def table_result():
+    collection = db["Vote"]
+    # details =[]
+    agg_result = collection.aggregate(
+        [{
+            "$group" :
+             {"_id" : "$Vote",
+             "Result" : {"$sum" : 1}
+             }}
+        ])
+    return render_template("table_result.html",agg_result = agg_result)
 
+
+@app.route("/bargraph", methods=["GET","POST"])
+def startpy():
+
+    result = {
+
+        "Greetings" : "Tactlabs welcomes you"
+    }
+
+    # return jsonify(result)
+    return render_template("bargraph.html") 
+
+
+@app.route("/api/data", methods=["GET"])
+def api_get_data():
+
+    result = business.get_data()
+
+   
+    return jsonify(result)
 
 
 if __name__ == '__main__':

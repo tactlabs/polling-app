@@ -85,7 +85,7 @@
 
     function get_data(){
 
-        url = "/bargraph"
+        url = "/api/data"
 
         var myusername = $("#username").val();
         $.ajax({
@@ -109,7 +109,7 @@
                 type: 'column'
             },
             title: {
-                text: 'Engineering Resources Provided by ASME'
+                text: 'Polling Result'
             },
             accessibility: {
                 announceNewData: {
@@ -118,7 +118,7 @@
             },
             xAxis: {
                     title: {
-                    text: 'Polling Result'
+                    text: 'candidates'
                 },
                 type: 'category'
             },
