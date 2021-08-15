@@ -2,27 +2,41 @@
 {% block title  %}vote-result{% endblock title%}
 
 {% block content %}
+<style>
+  #mybutton {
+    position: fixed;
+    bottom: 40px;
+    right: 25px;
+  }
+</style>
 <br>
 
-<h2 style="text-align: center;" >Vote Result</h2> 
-<br> 
+<h2 style="text-align: center;">Vote Result</h2>
 <br>
 <br>
 <br>
- <div class="row">
+<br>
+<div class="row">
   <div class="col-md-6">
-    <form action="/bargraph" method="POST" >
-        <h5>To see the result in bargraph model</h5>            
-        <input class="btn btn-success " type="submit" value="Result">
-    </form>
-</div>
-<div class="col-md-6">
-  <form action="/table_result" method="POST" >
-      <h5>To see the result in table format</h5>            
+    <form action="/bargraph" method="POST">
+      <h5>To see the result in bargraph model</h5>
       <input class="btn btn-success " type="submit" value="Result">
-  </form>
+    </form>
+  </div>
+  <div class="col-md-6">
+    <form action="/table_result" method="POST">
+      <h5>To see the result in table format</h5>
+      <input class="btn btn-success " type="submit" value="Result">
+    </form>
+  </div>
 </div>
- </div>
-  
 
-  {% endblock content %}
+<div class="col-md-12">
+  <form action="/admin" method="POST">
+    <input class="btn btn-success  posi" id="mybutton" type="submit" value="Admin Page">
+  </form>
+  <br>
+
+</div>
+
+{% endblock content %}

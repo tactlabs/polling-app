@@ -5,8 +5,6 @@ import pandas as pd
 import business
 
 
-
-
 import os
 from pymongo import MongoClient
 
@@ -20,12 +18,12 @@ mongo_uri = os.getenv('MONGO_URI')
 cluster = MongoClient(mongo_uri)
 
 db = cluster["Polling_App"]
-
 collection = db["Names"]
 
 @app.route('/',methods=['GET','POST'])
 def login_page():
     return render_template("login.html")
+
 
 @app.route('/poll_page',methods=['GET','POST'])
 def get_names():
@@ -42,7 +40,7 @@ def get_names():
         return redirect(url_for("login"))
 
 
-@app.route('/admin')
+@app.route('/admin',methods=['GET','POST'])
 def admin():
     return render_template("admin.html")
 
@@ -51,6 +49,7 @@ def admin():
 def enter_names():
     num = int(request.values.get("num"))
     return render_template("upload.html",num=num)
+
 
 @app.route('/insert',methods=["GET", "POST"])
 def insert():
@@ -65,6 +64,7 @@ def insert():
         collection.insert(query)
     # return "Names added Successfully!"
     return redirect(url_for("admin"))
+
 
 @app.route('/update',methods=["GET","POST"])
 def update():
@@ -91,6 +91,7 @@ def update():
 
     return render_template("update.html",val3 = val3 ,val =val)
 
+
 @app.route('/update-view',methods=["GET","POST"])
 def update_view():
     # num1 = int(request.form["num1"])
@@ -112,6 +113,7 @@ def delete_view():
     collection.delete_one(query)
     return redirect(request.referrer)
 
+
 @app.route('/login', methods=["GET","POST"])
 def login():
     if request.method == "POST":
@@ -124,12 +126,14 @@ def login():
             return redirect(url_for("get_names"))
         return render_template("login.html")
 
+
 @app.route("/logout",methods=["GET","POST"])
 def logout():
     if "user" in session:
         flash("You have been logged out!" , "info")
     session.pop("user",None)
     return redirect(url_for("login"))
+
 
 @app.route('/vote_data',methods=["GET","POST"])
 def vote_data():
@@ -144,20 +148,21 @@ def vote_data():
             query = {"Email" : user , "Vote" : poll_option}
             if collection.find_one({"Vote": query['Vote'], "Email" : query["Email"]}):
                 print("Duplicate value found")
-                return "Duplicate value found!"
-                # return redirect(request.referrer)
-                # return render_template("alert.html",msg = msg )
+
+                return "you have already casted your vote to this candidate!"
                 
             else:    
                 collection.insert_one(query)
                 print("No duplicate values!")
-                # flash("No Duplicate value found! Vote submited successfully")
+
+                return("your vote recorded  successfully ! ")
                 
+        else:
+
+            return redirect(url_for("login"))
 
             
-
-        return "Your have successfully  voted!"
-    
+  
 
 @app.route('/vote_details',methods=["GET","POST"])
 def vote_details():
@@ -176,6 +181,7 @@ def vote_details():
         
     # print(details)
     return  render_template("vote_details.html",result = details )
+
 
 @app.route('/drop',methods=['GET','POST'])
 def drop():
@@ -196,7 +202,6 @@ def task_count():
              }}
         ])
 
-
     names=[]
     res=[]
     for value in agg_result:
@@ -208,8 +213,6 @@ def task_count():
 
     data={'Vote': names,'Result': res}
     df = pd.DataFrame(data, columns = ['Vote', 'Result'])
-
-                            
     print(df)
     df.to_csv('result.csv', index=False)
     agg_result1 = agg_result
@@ -220,7 +223,7 @@ def task_count():
 @app.route('/table_result',methods=["GET","POST"])
 def table_result():
     collection = db["Vote"]
-    # details =[]
+    
     agg_result = collection.aggregate(
         [{
             "$group" :
@@ -228,6 +231,7 @@ def table_result():
              "Result" : {"$sum" : 1}
              }}
         ])
+
     return render_template("table_result.html",agg_result = agg_result)
 
 
@@ -248,7 +252,6 @@ def api_get_data():
 
     result = business.get_data()
 
-   
     return jsonify(result)
 
 

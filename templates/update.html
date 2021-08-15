@@ -2,6 +2,13 @@
 {% block title %}  update-names  {% endblock  title %}
 
 {% block content %}
+<style>
+    #mybutton {
+  position: fixed;
+  bottom: 40px;
+  right: 25px;
+}
+</style>
 
 <div class="row mt-4 ">
     <div class="col-md-4">
@@ -48,6 +55,13 @@
     </div>
 </div>
 
+<div class="col-md-12"  >
+    <form action="/admin" method="POST">
+      <input class="btn btn-success  posi" id="mybutton" type="submit" value="Admin Page">
+    </form>
+    <br>
+  
+  </div>
 
 <!-- <div class="col-md-6"style="text-align=center" >
            

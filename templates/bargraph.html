@@ -73,10 +73,7 @@
 
      
    <script>
-     //source:https://www.asme.org/topics-resources/content?PageIndex=1&PageSize=10&Path=/topics-resources/content&Topics=biomedical-engineering
-
-    //source : https://jsfiddle.net/u9kwctdx/
-  
+     
     $( document ).ready(function() {
             // console.log( "ready!" );
 
@@ -120,7 +117,7 @@
                     title: {
                     text: 'candidates'
                 },
-                type: 'category'
+                type: 'votes'
             },
             yAxis: {
                 title: {
@@ -143,12 +140,12 @@
 
             tooltip: {
                 headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-                pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.f}</b> categories <br/>'
+                pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.f}</b> votes <br/>'
             },
 
             series: [
                 {
-                    name: "Topic",
+                    name: "Result:",
                     colorByPoint: true,
                     data: data['data_list']
                 }

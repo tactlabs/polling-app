@@ -4,71 +4,83 @@
 {% block content %}
 <link href='https://luengo-font.s3.amazonaws.com/fonts.css' rel='stylesheet' type='text/css'>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> 
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 <style>
     * {
-  box-sizing: border-box;
-}
-.card {
+        box-sizing: border-box;
+    }
 
-  overflow: hidden;
-  position: absolute;
-  top: 190px;
-  left: 0;
-  right: 0;
-  margin: auto;
-  height: auto;
-  width: 400px;
-  border-style: solid;
-  border-width: 10px;
-  border-color: white;
-  border-radius: 50px;
-  background-color: grey;
-}
-body {
-  background-color: transparent;
-  font-family: "Luengo-Bold", sans-serif;
-}
-.noselect {
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Chrome/Safari/Opera */
-  -khtml-user-select: none; /* Konqueror */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* IE/Edge */
-  user-select: none; /* non-prefixed version, currently
+    .card {
+
+        overflow: hidden;
+        position: absolute;
+        top: 190px;
+        left: 0;
+        right: 0;
+        margin: auto;
+        height: auto;
+        width: 400px;
+        border-style: solid;
+        border-width: 10px;
+        border-color: white;
+        border-radius: 50px;
+        background-color: grey;
+    }
+
+    body {
+        background-color: transparent;
+        font-family: "Luengo-Bold", sans-serif;
+    }
+
+    .noselect {
+        -webkit-touch-callout: none;
+        /* iOS Safari */
+        -webkit-user-select: none;
+        /* Chrome/Safari/Opera */
+        -khtml-user-select: none;
+        /* Konqueror */
+        -moz-user-select: none;
+        /* Firefox */
+        -ms-user-select: none;
+        /* IE/Edge */
+        user-select: none;
+        /* non-prefixed version, currently
                                   not supported by any browser */
-}
+    }
 
-iframe {
-  width: 100%;
-  height: 100%;
-}
+    iframe {
+        width: 100%;
+        height: 100%;
+    }
 
-.btn{
-    float: left;
-    
-}
-.posi {
-    padding-right: 5px;
-    margin-left: 590px;
-    margin-top: 155px;
-}
-.fix{
-    margin-top: 30px;
-}
-#list-name{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-weight: 700;
-    font-size: 25px;
-    color: #ececec;
-    padding-left: 69px;
-    margin-top: 18px;
-}
-/* #lg-pos{
+    .btn {
+        float: left;
+
+    }
+
+    .posi {
+        padding-right: 5px;
+        margin-left: 590px;
+        margin-top: 155px;
+    }
+
+    .fix {
+        margin-top: 30px;
+    }
+
+    #list-name {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: 700;
+        font-size: 25px;
+        color: #ececec;
+        padding-left: 69px;
+        margin-top: 18px;
+    }
+
+    /* #lg-pos{
     padding-right: 10px;
 } */
-
 </style>
 
 
@@ -94,7 +106,7 @@ iframe {
 
 </form> -->
 
-<h4 style="text-align: center; " >Welcome to the Voting Page</h4>
+<h4 style="text-align: center; ">Welcome to the Voting Page</h4>
 <!-- {% with messages = get_flashed_messages() %}
     {% if messages %}
         {% for message in messages %}
@@ -113,45 +125,66 @@ iframe {
         <br>
         <br>
         <div class="card1" style="width: 18rem;">
-            <div class="card-body " style="background:#c8dcb3;" >
-              <h5 class="card-title">Instructions</h5>
-              <h6 class="card-text">* The user can proceed to cast his/her vote in this application. </h6>
+            <div class="card-body " style="background:#c8dcb3;">
+                <h5 class="card-title">Instructions</h5>
+                <h6 class="card-text">* The user can proceed to cast his/her vote in this application. </h6>
 
-              <h6 class="card-text">* You can vote for anyone on this list . But once you vote a candidate and try to vote the same person again , That will not consider as a vote!.</h6>
+                <h6 class="card-text">* You can vote for anyone on this list . But once you vote a candidate and try to
+                    vote the same person again , That will not consider as a vote!.</h6>
             </div>
-          </div>
-        
+        </div>
+
     </div>
     <div class="col-md-8">
         <!-- <h6 id="lg-pos" >Do you want to logout?</h6> -->
-        <form action="/logout" method="POST">    
+        <form action="/logout" method="POST">
             <input class="btn btn-success  posi" type="submit" value="logout">
         </form>
     </div>
+
+
 </div>
 
 <div class='card'>
-    <h3 id="list-name" >List of Candidates</h3>
-<div class="row card-body justify-content-center">
-    <div class="col-md-6">
-        <br>
-        <form method="post" id="poll_form">
-            
-            {% for x in val %}
-            <div class="radio ">
-                <label><h4><input type="radio" id="myRadio"  name="poll_option" class="poll_option" value="{{ x }}" /> {{ x }}</h4></label>
-            </div>
-            {% endfor %}
-            <br />
-            <input type="submit" value="Vote" name="poll_button" id="poll_button" class="btn btn-primary" />
-            <!-- <button  type="submit" name="poll_button" id="poll_button" >Vote</button> -->
-           
-        </form>
+    <h3 id="list-name">List of Candidates</h3>
+    <div class="row card-body justify-content-center">
+        <div class="col-md-6">
+            <br>
+            <form method="post" id="poll_form">
+
+                {% for x in val %}
+                <div class="radio ">
+                    <label>
+                        <h4><input type="radio" id="myRadio" name="poll_option" class="poll_option" value="{{ x }}" />
+                            {{ x }}</h4>
+                    </label>
+                </div>
+                {% endfor %}
+                <br />
+                <input type="submit" value="Vote" name="poll_button" id="poll_button" class="btn btn-primary" />
+                <!-- <button  type="submit" name="poll_button" id="poll_button" >Vote</button> -->
+
+            </form>
+        </div>
     </div>
-</div>
 
 </div>
-  
+<!-- <div class="col-md-6">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    <span>{{ message }}</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+</div> -->
+
 <!-- <div class="row">
     <div class="col-md-6">
 
@@ -164,58 +197,51 @@ iframe {
 </div> -->
 
 <script>
-   $(document).ready(function(){
-    fetch_poll_data();
-    function fetch_poll_data()
-    { 
-        var fetchall = 'all';
-        var dataString = 'fetchall='+ fetchall;
-        $.ajax({
-            url:"/polldata",
-            method:"POST",
-            data: dataString,
-            success:function(data)
-            {
-                $('#poll_result').html(data); 
-                $("#poll_result").append(data.htmlresponse);
-            }
-        });
-    }
-    $('#poll_form').on('submit', function(event){
-        event.preventDefault();
-        var poll_option = '';
-        $('.poll_option').each(function(){
-            if($(this).prop("checked"))
-            {
-                poll_option = $(this).val();
-            }
-        });
-        if(poll_option != '')
-        {
-            $('#poll_button').attr('disabled', 'disabled');
-            var form_data = $(this).serialize();
-            var flag =0;
-            
+    $(document).ready(function () {
+        fetch_poll_data();
+
+        function fetch_poll_data() {
+            var fetchall = 'all';
+            var dataString = 'fetchall=' + fetchall;
             $.ajax({
-                url:"/vote_data",
-                method:"POST",
-                data:form_data,
-                success:function()
-                {
-                    $('#poll_form')[0].reset();
-                    $('#poll_button').attr('disabled', false);
-                    fetch_poll_data();
-                    alert("Vote Submitted ");
+                url: "/polldata",
+                method: "POST",
+                data: dataString,
+                success: function (data) {
+                    $('#poll_result').html(data);
+                    $("#poll_result").append(data.htmlresponse);
                 }
             });
         }
-        
-        else
-        {
-            alert("Please Select Option");
-        }
+        $('#poll_form').on('submit', function (event) {
+            event.preventDefault();
+            var poll_option = '';
+            $('.poll_option').each(function () {
+                if ($(this).prop("checked")) {
+                    poll_option = $(this).val();
+                }
+            });
+            if (poll_option != '') {
+                $('#poll_button').attr('disabled', 'disabled');
+                var form_data = $(this).serialize();
+                var flag = 0;
+
+                $.ajax({
+                    url: "/vote_data",
+                    method: "POST",
+                    data: form_data,
+                    success: function (e) {
+                        $('#poll_form')[0].reset();
+                        $('#poll_button').attr('disabled', false);
+                        fetch_poll_data();
+                        alert(e);
+                    }
+                });
+            } else {
+                alert("Please Select Option");
+            }
+        });
     });
-});
 </script>
 
 {% endblock content %}
